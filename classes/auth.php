@@ -81,9 +81,9 @@ class Auth
                 header('Location: classes/welcome.php');
             } else {
                 setcookie('login', $login, 0, '/');
-                $_SESSION['u'] += 1;
+                $_SESSION['login'] += 1;
                 echo '<h3 class="nav" style="color: red; text-align: center">Invalid data entry</h3>';
-                if ($_SESSION['u'] > 2) {
+                if ($_SESSION['login'] > 2) {
                     header("Location: wrong.php");
                 }
             }

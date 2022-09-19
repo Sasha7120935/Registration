@@ -7,7 +7,7 @@ class Wrong
         session_start();
         session_destroy();
         echo "Please try again later";
-        header('refresh: 300 url=index.php');
+        header('refresh: 300; url=index.php');
     }
 }
 
