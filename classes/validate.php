@@ -37,8 +37,7 @@ class Validate
     {
         $data = trim($data);
         $data = stripcslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
+        return htmlspecialchars($data);
 
     }
 

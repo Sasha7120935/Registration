@@ -13,6 +13,7 @@ class Auth
                 return true;
             }
         }
+
         return false;
 
     }
@@ -24,9 +25,11 @@ class Auth
         $emailFromCookie = isset($_COOKIE['email']) ? $_COOKIE['email'] : '';
         $passwordFromCookie = isset($_COOKIE['pwd']) ? $_COOKIE['pwd'] : '';
         $conPasswordFromCookie = isset($_COOKIE['conPwd']) ? $_COOKIE['conPwd'] : '';
-        if (Auth::checkAuth($nameFromCookie, $surnameFromCookie, $emailFromCookie, $passwordFromCookie,$conPasswordFromCookie)) {
+
+        if (Auth::checkAuth($nameFromCookie, $surnameFromCookie, $emailFromCookie, $passwordFromCookie, $conPasswordFromCookie)) {
             return $nameFromCookie;
         }
+
         return null;
 
     }
@@ -67,6 +70,8 @@ class Auth
             $email = $_POST['email'] ?: '';
             $password = $_POST['pwd'] ?: '';
             $conPassword = $_POST['conPwd'] ?: '';
+            $login = $_POST['login'] ?: '';
+            session_start();
             if (Auth::checkAuth($name, $surname, $email, $password, $conPassword)) {
                 setcookie('name', $name, 0, '/');
                 setcookie('surname', $surname, 0, '/');
@@ -74,7 +79,16 @@ class Auth
                 setcookie('pwd', $password, 0, '/');
                 setcookie('conPwd', $conPassword, 0, '/');
                 header('Location: classes/welcome.php');
+            } else {
+                setcookie('login', $login, 0, '/');
+                $_SESSION['u'] += 1;
+                echo '<h3 class="nav" style="color: red; text-align: center">Invalid data entry</h3>';
+                if ($_SESSION['u'] > 2) {
+                    header("Location: wrong.php");
+                }
             }
+
         }
     }
+
 }
