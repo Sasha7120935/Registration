@@ -6,12 +6,9 @@ class Auth
 {
     public static function checkAuth($name, $surname, $email, $password, $conPassword)
     {
-        $users = Auth::userDb();
-
-        foreach ($users as $user) {
-            if ($user['name'] === $name && $user['surname'] === $surname && $user['email'] === $email && $user['pwd'] === $password && $user['conPwd'] === $conPassword) {
-                return true;
-            }
+        $users = Db::userDb();
+        if ($users['name'] === $name && $users['surname'] === $surname && $users['email'] === $email && $users['pwd'] === $password && $users['conPwd'] === $conPassword) {
+            return true;
         }
 
         return false;
@@ -32,34 +29,6 @@ class Auth
 
         return null;
 
-    }
-
-    public static function userDb()
-    {
-        return
-            [
-                [
-                    'name' => 'alek',
-                    'surname' => 'alek',
-                    'email' => 'alek@gmail.com',
-                    'pwd' => '1234@Abcd',
-                    'conPwd' => '1234@Abcd'
-                ],
-                [
-                    'name' => 'alek2',
-                    'surname' => 'alek2',
-                    'email' => 'alek2@gmail.com',
-                    'pwd' => '1234@Abcd',
-                    'conPwd' => '1234@Abcd'
-                ],
-                [
-                    'name' => 'alek3',
-                    'surname' => 'alek3',
-                    'email' => 'alek3@gmail.com',
-                    'pwd' => '1234@Abcd',
-                    'conPwd' => '1234@Abcd',
-                ]
-            ];
     }
 
     public static function getWelcome()
@@ -84,6 +53,7 @@ class Auth
                 $_SESSION['login'] += 1;
                 echo '<h3 class="nav" style="color: red; text-align: center">Invalid data entry</h3>';
                 if ($_SESSION['login'] > 2) {
+                    Db::addToTable();
                     header("Location: wrong.php");
                 }
             }
